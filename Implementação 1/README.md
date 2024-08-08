@@ -34,3 +34,39 @@ Representa a lista encadeada e fornece métodos para manipulação.
   - `int removerFim()`: Remove e retorna o valor do último nó.
   - `void remover(int posicao)`: Remove o nó na posição especificada.
   - `void mostrar()`: Exibe todos os valores dos nós na lista.
+
+# Pilha em C++
+
+A classe `Pilha` representa uma pilha de inteiros utilizando uma lista encadeada dinâmica. A pilha suporta operações básicas como empilhar (adicionar) um elemento, desempilhar (remover) um elemento e consultar o elemento no topo da pilha.
+
+## Estrutura da Classe
+
+### `No`
+
+Representa um nó na lista encadeada, utilziada na estruturação da pilha.
+
+- **Atributos**:
+  - `int conteudo`: Valor armazenado no nó.
+  - `No* prox`: Ponteiro para o próximo nó.
+
+- **Construtor**:
+  - `No(int conteudo)`: Inicializa o nó com o valor fornecido e define `prox` como `nullptr`.
+  
+### Pilha
+
+A classe `Pilha` gerencia a pilha e suas operações.
+
+- **Atributos**:
+  - `No* Topo`: Ponteiro para o topo da pilha.
+
+- **Construtor**:
+  - `Pilha()`: Inicializa a pilha com o topo como `nullptr`.
+
+- **Métodos**:
+
+  - `bool verificaVazio()`: Verifica se a pilha está vazia. Retorna `true` se a pilha estiver vazia e `false` caso contrário.
+  - `void empilhar(int conteudo)`: Adiciona um novo elemento ao topo da pilha.
+  - `int desempilhar()`: Remove e retorna o elemento do topo da pilha.  
+  - `int consultarTopo()`: Retorna o valor do elemento no topo da pilha sem removê-lo.
+ 
+
