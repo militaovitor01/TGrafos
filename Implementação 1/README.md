@@ -52,7 +52,7 @@ Representa um nó na lista encadeada, utilziada na estruturação da pilha.
 - **Construtor**:
   - `No(int conteudo)`: Inicializa o nó com o valor fornecido e define `prox` como `nullptr`.
   
-### 'Pilha'
+### `Pilha`
 
 A classe `Pilha` gerencia a pilha e suas operações.
 
