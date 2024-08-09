@@ -69,4 +69,52 @@ A classe `Pilha` gerencia a pilha e suas operações.
   - `int desempilhar()`: Remove e retorna o elemento do topo da pilha.  
   - `int consultarTopo()`: Retorna o valor do elemento no topo da pilha sem removê-lo.
  
+### `Fila`
+
+## Classe `No`
+
+A classe `No` representa um nó em uma lista encadeada. Cada nó contém um valor inteiro e um ponteiro para o próximo nó na lista.
+
+### Construtores
+
+- **No(int conteudo)**
+  - Cria um novo nó com o valor fornecido e inicializa o ponteiro `prox` como `nullptr`.
+
+- **No()**
+  - Construtor padrão (não utilizado efetivamente). Não deve ser usado pois não inicializa `conteudo` corretamente.
+
+### Atributos
+
+- **int conteudo**
+  - Armazena o valor inteiro do nó.
+
+- **No* prox**
+  - Ponteiro para o próximo nó na lista.
+
+## Classe `Fila`
+
+A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui operações básicas para manipular a fila, como enfileirar, desenfileirar, consultar o primeiro elemento e imprimir a fila.
+
+### Construtores
+
+- **Fila()**
+  - Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
+
+### Métodos
+
+- **void enfileirar(int conteudo)**
+  - Adiciona um novo elemento ao final da fila. Se a fila estiver vazia, o novo nó será o primeiro e o último elemento da fila.
+
+- **int desenfileirar()**
+  - Remove e retorna o elemento no início da fila. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia. Atualiza o ponteiro `ultimo` se a fila ficar vazia após a remoção.
+
+- **int consultarPrimeiro()**
+  - Retorna o valor do primeiro elemento da fila sem removê-lo. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia.
+
+- **void imprimir()**
+  - Imprime todos os elementos da fila, do início ao fim.
+
+- **void identificaElemento(int elemento)**
+  - Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. **Nota:** A implementação atual possui um erro onde o método imprime uma mensagem para cada nó, independentemente de ter encontrado o elemento.
+
 
