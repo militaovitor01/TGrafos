@@ -1,7 +1,7 @@
 # Documentação
 
 - Este projeto busca implementar o que foi solicitado no exercício "Implementação 1".
-- Todos os arquivos de codigo possuem a classe No, a classe da sua respectiva estrutura e uma função Main para testes;
+- Todos os arquivos de codigo possuem a classe No, (Exceto o arquivo Matriz, que foi feito de forma linear) a classe da sua respectiva estrutura e uma função Main para testes;
 
 # Lista Encadeada em C++
 ## Classes
@@ -99,5 +99,22 @@ A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui op
   - `int consultarPrimeiro()`: Retorna o valor do primeiro elemento da fila sem removê-lo. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia.
   - `void imprimir()`: Imprime todos os elementos da fila, do início ao fim.
   - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
+
+# Matriz em C++
+
+### Classe `Matriz`
+
+Representa uma matriz de inteiros 3x3 e fornece métodos para manipulação e consulta dos elementos.
+
+- **Atributos**:
+
+  - **`int matriz[NUM_LIN][NUM_COL]`**: Matriz de inteiros com dimensões definidas por `NUM_LIN` e `NUM_COL` (3x3).
+
+- **Métodos**:
+
+  - `void preencherMatriz()`: Preenche a matriz com valores inseridos pelo usuário. Solicita ao usuário o valor para cada posição da matriz.  
+  - `void exibirMatriz() const`: Exibe os valores atuais da matriz na tela. Cada linha da matriz é impressa em uma linha separada.  
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na matriz. Imprime uma mensagem indicando se o elemento está ou não presente. 
+  - `void removeElemento(int elemento)`: Remove o elemento especificado da matriz substituindo-o por `-1`. Se o elemento não for encontrado, imprime uma mensagem indicando que o elemento não está presente.
 
 
