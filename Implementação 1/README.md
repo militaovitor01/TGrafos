@@ -90,7 +90,7 @@ A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui op
 
 - **Construtor**
 
-  -`Fila()`: Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
+  - `Fila()`: Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
 
 - **Métodos**:
 
