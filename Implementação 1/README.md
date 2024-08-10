@@ -88,17 +88,16 @@ Representa um nó na lista encadeada, utilziada na estruturação da pilha.
 
 A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui operações básicas para manipular a fila, como enfileirar, desenfileirar, consultar o primeiro elemento e imprimir a fila.
 
-### Construtores
+**Construtor**
 
-- **Fila()**
-  - Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
+-`Fila()`: Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
 
 - **Métodos**:
 
-- `void enfileirar(int conteudo)`: Adiciona um novo elemento ao final da fila. Se a fila estiver vazia, o novo nó será o primeiro e o último elemento da fila.
-- `int desenfileirar()`: Remove e retorna o elemento no início da fila. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia. Atualiza o ponteiro `ultimo` se a fila ficar vazia após a remoção.
-- `int consultarPrimeiro()`: Retorna o valor do primeiro elemento da fila sem removê-lo. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia.
-- `void imprimir()`: Imprime todos os elementos da fila, do início ao fim.
-- `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
+  - `void enfileirar(int conteudo)`: Adiciona um novo elemento ao final da fila. Se a fila estiver vazia, o novo nó será o primeiro e o último elemento da fila.
+  - `int desenfileirar()`: Remove e retorna o elemento no início da fila. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia. Atualiza o ponteiro `ultimo` se a fila ficar vazia após a remoção.
+  - `int consultarPrimeiro()`: Retorna o valor do primeiro elemento da fila sem removê-lo. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia.
+  - `void imprimir()`: Imprime todos os elementos da fila, do início ao fim.
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
 
 
