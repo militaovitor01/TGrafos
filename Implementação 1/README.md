@@ -38,8 +38,6 @@ Representa a lista encadeada e fornece métodos para manipulação.
 
 # Pilha em C++
 
-A classe `Pilha` representa uma pilha de inteiros utilizando uma lista encadeada dinâmica. A pilha suporta operações básicas como empilhar (adicionar) um elemento, desempilhar (remover) um elemento e consultar o elemento no topo da pilha.
-
 ## Estrutura da Classe
 
 ### `No`
@@ -71,7 +69,9 @@ A classe `Pilha` gerencia a pilha e suas operações.
   - `int consultarTopo()`: Retorna o valor do elemento no topo da pilha sem removê-lo.
   - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. **Nota:** A implementação atual possui um erro onde o método imprime uma mensagem para cada nó, independentemente de ter encontrado o elemento.
  
-### `Fila` em C++
+# `Fila` em C++
+
+## Estrutura da Classe
 
 ### `No`
 
