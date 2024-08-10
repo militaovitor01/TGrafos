@@ -34,7 +34,7 @@ Representa a lista encadeada e fornece métodos para manipulação.
   - `int removerFim()`: Remove e retorna o valor do último nó.
   - `void remover(int posicao)`: Remove o nó na posição especificada.
   - `void mostrar()`: Exibe todos os valores dos nós na lista.
-  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na lista. 
 
 # Pilha em C++
 
@@ -67,9 +67,9 @@ A classe `Pilha` gerencia a pilha e suas operações.
   - `void empilhar(int conteudo)`: Adiciona um novo elemento ao topo da pilha.
   - `int desempilhar()`: Remove e retorna o elemento do topo da pilha.  
   - `int consultarTopo()`: Retorna o valor do elemento no topo da pilha sem removê-lo.
-  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na pilha. 
  
-# `Fila` em C++
+# Fila em C++
 
 ## Estrutura da Classe
 
