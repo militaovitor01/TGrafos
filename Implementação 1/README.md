@@ -34,7 +34,7 @@ Representa a lista encadeada e fornece métodos para manipulação.
   - `int removerFim()`: Remove e retorna o valor do último nó.
   - `void remover(int posicao)`: Remove o nó na posição especificada.
   - `void mostrar()`: Exibe todos os valores dos nós na lista.
-  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. **Nota:** A implementação atual possui um erro onde o método imprime uma mensagem para cada nó, independentemente de ter encontrado o elemento.
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
 
 # Pilha em C++
 
@@ -67,7 +67,7 @@ A classe `Pilha` gerencia a pilha e suas operações.
   - `void empilhar(int conteudo)`: Adiciona um novo elemento ao topo da pilha.
   - `int desempilhar()`: Remove e retorna o elemento do topo da pilha.  
   - `int consultarTopo()`: Retorna o valor do elemento no topo da pilha sem removê-lo.
-  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. **Nota:** A implementação atual possui um erro onde o método imprime uma mensagem para cada nó, independentemente de ter encontrado o elemento.
+  - `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
  
 # `Fila` em C++
 
@@ -99,6 +99,6 @@ A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui op
 - `int desenfileirar()`: Remove e retorna o elemento no início da fila. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia. Atualiza o ponteiro `ultimo` se a fila ficar vazia após a remoção.
 - `int consultarPrimeiro()`: Retorna o valor do primeiro elemento da fila sem removê-lo. Lança uma exceção (`std::runtime_error`) se a fila estiver vazia.
 - `void imprimir()`: Imprime todos os elementos da fila, do início ao fim.
-- `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. **Nota:** A implementação atual possui um erro onde o método imprime uma mensagem para cada nó, independentemente de ter encontrado o elemento.
+- `void identificaElemento(int elemento)`: Verifica se um elemento está presente na fila. Imprime uma mensagem indicando se o elemento está ou não na fila. 
 
 
