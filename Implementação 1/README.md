@@ -88,9 +88,9 @@ Representa um nó na lista encadeada, utilziada na estruturação da pilha.
 
 A classe `Fila` representa uma fila (FIFO) usando uma lista encadeada. Inclui operações básicas para manipular a fila, como enfileirar, desenfileirar, consultar o primeiro elemento e imprimir a fila.
 
-**Construtor**
+- **Construtor**
 
--`Fila()`: Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
+  -`Fila()`: Cria uma nova fila vazia, com `primeiro` e `ultimo` como `nullptr`.
 
 - **Métodos**:
 
