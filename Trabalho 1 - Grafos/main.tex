@@ -1,0 +1,342 @@
+\documentclass{sbc2023}%
+
+\usepackage{graphicx}
+%\usepackage[utf8]{inputenc}
+\usepackage[misc,geometry]{ifsym} 
+\usepackage{fontspec}
+\usepackage{fontawesome}
+\usepackage{academicons}
+\usepackage{color}
+\usepackage{hyperref} 
+\usepackage{aas_macros}
+\usepackage[bottom]{footmisc}
+\usepackage{supertabular}
+\usepackage{afterpage}
+\usepackage{url}
+\usepackage{pifont}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e} 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}  % Para símbolos matemáticos
+\usepackage{amsfonts}  % Fontes matemáticas
+\usepackage{amssymb}  % Símbolos matemáticos adicionais
+
+
+
+
+\setcitestyle{square}
+
+\definecolor{orcidlogo}{rgb}{0.37,0.48,0.13}
+\definecolor{unilogo}{rgb}{0.16, 0.26, 0.58}
+\definecolor{maillogo}{rgb}{0.58, 0.16, 0.26}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.0}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+%\hypersetup{colorlinks,citecolor=blue,linkcolor=blue,urlcolor=blue}
+
+%%%%%%% IMPORTANT: We disable hyperlinks by default with this line, to avoid the error "\pdfendlink ended up in different nesting level" while writing.
+%\hypersetup{draft}
+
+\jid{JBCS}
+\jtitle{Trabalho Prático 01, ministrado pelo Professor Silvio Jamil Ferzoli Guimarães}
+\jyear{2025}
+
+\title[Enumeração de Ciclos em Grafos: Permutação e Caminhamento]{Enumeração de Ciclos em Grafos: Permutação e Caminhamento}
+
+%THE ORCID IS MANDATORY FOR EACH AUTHOR IN JBCS
+\author{
+    \begin{tabular}{ll}
+        \textbf{Diego Polanski de Freitas Vieira} & \texttt{polanskidiego@gmail.com} \\
+        \textbf{Vitor Dias de Britto Militão} & \texttt{vdiasmilitao@gmail.com} \\
+        \textbf{Vitor Alexandre Moreira Amaral} & \texttt{vitoramamaral@gmail.com} \\
+        \textbf{Mateus Nunes Bello} & \texttt{nunesbellom@gmail.com} \\
+        \textbf{Pedro Henrique Bellone Souza e Silva} & \texttt{pedrohbsyt@gmail.com} \\
+        \textbf{Nalberth Henrique Vieira Pinto} & \texttt{nalberthvieira@gmail.com}
+    \end{tabular}
+}
+
+\begin{frontmatter}
+\maketitle
+
+\begin{mail}
+Pontifícia Universidade Católica de Minas Gerais, R. Dom José Gaspar, 500 - Coração Eucarístico, Belo Horizonte - MG, 30535-901 
+\end{mail}
+
+
+
+\begin{abstract}
+\textbf{Abstract.~}
+\noindent Algoritmos baseados em grafos são amplamente utilizados em diversas áreas para a solução de problemas computacionais. Neste trabalho, abordamos o problema da enumeração de todos os ciclos em um grafo simples não direcionado. Para isso, implementamos e comparamos duas abordagens distintas: (i) um método baseado na permutação dos vértices e (ii) um método baseado em caminhamento no grafo. A eficiência de ambas as abordagens foi analisada considerando o desempenho à medida que o tamanho do grafo aumenta. Além disso, discutimos a escolha da representação do grafo e avaliamos a aplicabilidade das implementações para grafos direcionados. Os resultados experimentais evidenciam as diferenças entre as abordagens, fornecendo insights sobre seu uso prático.
+\end{abstract}
+
+\begin{keywords}
+Grafos, Ciclos, BFS, Permutação
+\end{keywords}
+
+%\begin{license}
+%Published under the Creative Commons Attribution 4.0 International Public License (CC BY 4.0)
+%\end{license}
+
+\end{frontmatter}
+
+
+\section{Introdução}
+
+A Teoria dos Grafos é uma área fundamental da Matemática e da Ciência da Computação, com aplicações diretas em redes de computadores, inteligência artificial, logística, biologia computacional e análise de redes sociais. Um dos problemas clássicos dessa área é a identificação e enumeração de ciclos em grafos. Em um grafo simples não direcionado, um ciclo é uma sequência fechada de vértices conectados por arestas, sem repetição de vértices intermediários. A detecção eficiente de ciclos é essencial em diversas aplicações, como análise de dependências computacionais, interações químicas e circuitos elétricos.
+
+Neste trabalho, implementamos e comparamos duas abordagens para a enumeração de ciclos: (i) um método baseado na permutação dos vértices e (ii) um método baseado no caminhamento no grafo. O primeiro gera diferentes ordenações de vértices para identificar ciclos válidos, enquanto o segundo percorre a estrutura do grafo utilizando técnicas de busca. Cada abordagem apresenta vantagens e desafios, especialmente em termos de escalabilidade e eficiência computacional.
+
+Além da implementação, realizamos uma análise comparativa detalhada, avaliando o impacto do aumento de vértices e arestas no desempenho de cada método. Também discutimos a representação do grafo adotada e a possibilidade de adaptação das soluções para grafos direcionados.
+
+Nosso principal objetivo é compreender quais técnicas são mais eficientes na enumeração de ciclos e em quais contextos se aplicam melhor. A partir dos resultados experimentais, buscamos identificar limitações e potenciais otimizações, contribuindo para um melhor entendimento do problema e suas aplicações na Computação.
+
+Usaremos como base para comparação entre os métodos o grafo a seguir:
+
+\begin{center}
+\includegraphics[width=\columnwidth]{Image/Grafo_base.png}
+\caption{Figura 1: Exemplo de grafo com 6 vértices e 11 arestas.}
+\end{center}
+
+
+
+\section{Detecção de Ciclos por Permutação}
+A classe \texttt{DetectaCiclosPermutacao} tem como objetivo identificar ciclos em um grafo não direcionado por meio de permutações dos vértices do grafo. O principal objetivo dessa classe é gerar todas as permutações possíveis dos vértices e verificar se existe um caminho cíclico entre os vértices de uma permutação específica. O algoritmo realiza essa detecção em duas funções principais: \texttt{PossuiCaminhoEntreVertice} e \texttt{gerarPermutacoes}.
+
+
+\subsection{Função \texttt{gerarPermutacoes}}
+Esta função é responsável por gerar todas as permutações possíveis de vértices no grafo e verificar se algum ciclo é detectado. Ela recebe os seguintes parâmetros:
+
+\begin{itemize}
+    \item \textbf{\texttt{totalVertices}}: O número total de vértices no grafo.
+    \item \textbf{\texttt{tamanhoGrupo}}: O tamanho do ciclo que se deseja detectar (geralmente, maior que 2 para formar ciclos válidos).
+    \item \textbf{\texttt{tamanhoAtual}}: O número de vértices já selecionados para a permutação atual.
+    \item \textbf{\texttt{grupoAtual}}: Um vetor de inteiros que armazena os vértices da permutação atual.
+    \item \textbf{\texttt{totalPermutacoes}}: Um vetor que armazenará todas as permutações geradas.
+\end{itemize}
+
+A função realiza o seguinte processo:
+
+\begin{algorithm}[H]
+    \caption{Geração de Permutações de Vértices}
+    \label{alg:GerarPermutacoes}
+    \footnotesize
+    \DontPrintSemicolon
+    \KwIn{\textit{totalVertices} (número total de vértices),  
+          \textit{tamanhoGrupo} (tamanho do grupo),  
+          \textit{tamanhoAtual} (tamanho atual da permutação),  
+          \textit{grupoAtual} (permutação parcial),  
+          \textit{totalPermutacoes} (matriz de saída)}  
+    \KwOut{Lista de todas as permutações possíveis}
+    
+    \If{$tamanhoAtual = tamanhoGrupo$}{
+        Adicionar \textit{grupoAtual} a \textit{totalPermutacoes} \;
+        \Return \;
+    }
+    
+    \For{$i \gets 0$ \textbf{até} $totalVertices - 1$}{
+        \If{$i \notin grupoAtual$}{
+            Adicionar $i$ a \textit{grupoAtual} \;
+            \textsc{GerarPermutações}($totalVertices$, $tamanhoGrupo$,  
+                $tamanhoAtual + 1$, $grupoAtual$, $totalPermutacoes$) \;
+            Remover último elemento de \textit{grupoAtual} \;
+        }
+    }
+\end{algorithm}
+
+
+
+\subsection{Função \texttt{PossuiCaminhoEntreVertice}}
+Esta função tem como objetivo verificar se existe um caminho cíclico entre os vértices de uma permutação dada, levando em consideração a matriz de adjacência do grafo. Ela recebe dois parâmetros:
+
+\begin{itemize}
+    \item \textbf{\texttt{aresta}}: Um vetor de inteiros que representa uma permutação dos vértices do grafo. A função verifica se existe um caminho entre os vértices consecutivos dessa permutação.
+    \item \textbf{\texttt{matrizAdj}}: A matriz de adjacência que representa o grafo. Um valor de 1 na posição \texttt{matrizAdj[i][j]} indica que existe uma aresta entre os vértices \texttt{i} e \texttt{j}.
+\end{itemize}
+
+A função realiza o seguinte processo:
+
+\begin{algorithm}
+\caption{Verifica se um conjunto de vértices forma um ciclo}
+\label{alg:PossuiCaminhoEntreVertice}
+\footnotesize
+\DontPrintSemicolon
+\KwIn{$\text{aresta}$: vetor de inteiros representando os vértices percorridos \\
+\hspace{10mm} $\text{matrizAdj}$: matriz de adjacência do grafo}
+\KwOut{\textbf{true} se os vértices formam um ciclo válido, caso contrário \textbf{false}}
+\SetAlgoLined
+\If{$|\text{aresta}| < 3$}{
+    \Return \textbf{false}\;
+}
+\For{$i \gets 1$ \textbf{to} $|\text{aresta}| - 1$}{
+    \If{$\text{matrizAdj}[\text{aresta}[i-1]][\text{aresta}[i]] \neq 1$}{
+        \Return \textbf{false}\;
+    }
+}
+\Return $(\text{matrizAdj}[\text{aresta}[|\text{aresta}|-1]][\text{aresta}[0]] = 1)$\;
+\end{algorithm}
+
+\subsection{Função \texttt{encontrarCiclos}}
+Esta função tem como objetivo encontrar ciclos em um grafo, considerando ciclos de diferentes tamanhos, a partir de 3 vértices até o número total de vértices do grafo. O funcionamento principal dessa função é iterar sobre os possíveis tamanhos de ciclo, gerar todas as permutações possíveis de vértices para cada tamanho de ciclo e verificar se essas permutações formam ciclos válidos. Para isso, ela utiliza as funções \texttt{gerarPermutacoes} e \texttt{PossuiCaminhoEntreVertice}.
+
+A função recebe um único parâmetro:
+
+\begin{itemize}
+    \item \textbf{\texttt{g}}: O grafo no qual os ciclos serão encontrados. O grafo é representado por uma classe \texttt{Grafo}, que contém a matriz de adjacência do grafo.
+\end{itemize}
+
+O funcionamento da função é da seguinte forma:
+
+\begin{algorithm}
+\caption{Inicializa os Vetores e Enumera os Ciclos no Grafo}
+\label{alg:EncontrarCiclos}
+\footnotesize
+\DontPrintSemicolon
+\KwIn{$g$: O grafo contendo a matriz de adjacência}
+\KwOut{Impressão do total de ciclos encontrados para cada tamanho de ciclo e o total geral de ciclos}
+\SetAlgoLined
+\KwData{$\text{matrizAdj}$: Matriz de adjacência do grafo, $\text{totalVertices}$: número de vértices no grafo}
+\For{$tamanhoGrupo \gets 3$ \textbf{to} $\text{totalVertices}$}{
+    \Call{GerarPermutacoes}{$\text{totalVertices}, \text{tamanhoGrupo}, 0, [], grupos$}\;
+    ciclosPorTamanho $\gets 0$\;
+    \ForEach{$grupo$ em $grupos$}{
+        \If{\Call{PossuiCaminhoEntreVertice}{$grupo, \text{matrizAdj}$}}{
+            ciclosPorTamanho $\gets ciclosPorTamanho + 1$\;
+        }
+    }
+    ciclosAjustados $\gets \frac{ciclosPorTamanho}{tamanhoGrupo \times 2}$\;
+    totalCiclos $\gets totalCiclos + ciclosAjustados$\;
+    Imprimir "Total de ciclos encontrados para tamanho $tamanhoGrupo$: $ciclosAjustados$\";
+}
+Imprimir "Total geral de ciclos encontrados: $totalCiclos$\";
+\end{algorithm}
+
+\subsection{Eficiência e Garantia de Ciclos Únicos}
+A abordagem de permutação garante que todos os caminhos possíveis sejam explorados, porém, a geração de permutações pode ser computacionalmente cara, principalmente para grafos grandes. A função \texttt{gerarPermutacoes} gera todas as permutações possíveis dos vértices, o que leva a uma complexidade de \(O(V!)\), onde \(V\) é o número de vértices no grafo.
+
+A função \texttt{PossuiCaminhoEntreVertice} verifica se a permutação formada constitui um ciclo válido, o que tem uma complexidade de \(O(V)\), já que precisa percorrer os vértices da permutação. Assim, a complexidade geral do algoritmo pode ser estimada como \(O(V! \cdot V)\), o que pode ser muito alto para grafos grandes. 
+
+O algoritmo garante a não repetição de ciclos, uma vez executa uma verificação dividindo por 2.
+
+\subsubsection{Complexidade do Algoritmo}
+A complexidade do algoritmo é dominada pela geração das permutações, que é \(O(V!)\), multiplicada pela verificação do caminho cíclico, que é \(O(V)\) para cada permutação. Portanto, a complexidade total do algoritmo é \(O(V! \cdot V)\). Esse algoritmo é mais adequado para grafos pequenos ou médios, onde o número de vértices não é muito grande, permitindo que a geração de permutações seja computacionalmente viável. Para grafos maiores, esse método pode ser ineficiente, e abordagens alternativas, como busca em profundidade ou algoritmos de detecção de ciclos mais especializados, podem ser mais apropriadas.
+
+
+\section{Detecção de Ciclos por Caminhamento}
+A classe \texttt{DetectaCiclos} tem como objetivo identificar ciclos em um grafo não direcionado utilizando a técnica de Busca em Profundidade (DFS). O principal objetivo desse código é explorar os vértices do grafo de forma a encontrar ciclos, evitando ciclos repetidos e garantindo que a detecção seja eficiente. A implementação consiste em duas funções principais: \texttt{encontrarCiclos} e \texttt{buscarCiclos}.
+
+\subsection{Função \texttt{encontrarCiclos}}
+Esta função é chamada para iniciar a busca por ciclos no grafo. Ela percorre todos os vértices do grafo, chamando a função \texttt{buscarCiclos} para cada vértice. O primeiro parâmetro da função \texttt{buscarCiclos} é o vértice atual, e o segundo parâmetro é o vértice de início, garantindo que a busca será realizada a partir de um vértice específico. A função mantém um conjunto de ciclos únicos, representados como strings, para garantir que ciclos repetidos não sejam contados várias vezes. O cálculo do número total de ciclos é realizado dividindo o tamanho do conjunto por 2, uma vez que cada ciclo é contado em ambas as direções, o que resulta em uma duplicação dos ciclos.
+
+\begin{algorithm}
+\caption{Encontrar Ciclos no Grafo}
+\label{alg:EncontrarCiclos}
+\footnotesize
+\DontPrintSemicolon
+\KwIn{$g$: O grafo contendo a matriz de adjacência}
+\KwOut{Impressão do total de ciclos encontrados}
+
+\SetAlgoLined
+\KwData{$\text{matrizAdj}$: Matriz de adjacência do grafo, $n$: número de vértices}
+\For{$i \gets 0$ \textbf{to} $n-1$}{
+    $\text{visitados} \gets$ vetor de tamanho $n$ com \textbf{false}\;
+    \Call{BuscarCiclos}{$i, i, \{\}, \text{visitados}, i, \text{matrizAdj}$}\;
+}
+Imprimir "Total de ciclos encontrados: $\frac{\text{ciclosUnicos.size()}}{2}$"\;
+\end{algorithm}
+
+\usepackage{float} % Adicione isso no preâmbulo do seu documento
+
+\subsection{Função \texttt{buscarCiclos}}
+
+Esta função é a implementação recursiva da Busca em Profundidade. Ela recebe os seguintes parâmetros:
+
+\begin{itemize}
+    \item \textbf{\texttt{atual}}: Representa o vértice que está sendo processado no momento na busca.
+    \item \textbf{\texttt{inicio}}: Representa o vértice onde o ciclo começou, usado para verificar se encontramos um ciclo completo.
+    \item \textbf{\texttt{caminho}}: Uma lista contendo os vértices que foram visitados até o momento no caminho atual. A lista ajuda a reconstruir o ciclo quando ele é detectado.
+    \item \textbf{\texttt{visitados}}: Um conjunto que mantém o registro dos vértices já visitados, evitando que o algoritmo entre em ciclos infinitos.
+    \item \textbf{\texttt{menorInicio}}: O menor vértice que foi encontrado até o momento no ciclo, utilizado para padronizar a rotação do ciclo e evitar contagens duplicadas.
+\end{itemize}
+
+O funcionamento da função é o seguinte:
+
+\begin{algorithm}
+\caption{Buscar Ciclos no Grafo}
+\label{alg:BuscarCiclos}
+\footnotesize
+\DontPrintSemicolon
+\KwIn{$\text{atual}$: Vértice atualmente sendo visitado}
+\KwIn{$\text{inicio}$: Vértice de início do ciclo}
+\KwIn{$\text{caminho}$: Vetor contendo o caminho atual percorrido}
+\KwIn{$\text{visitados}$: Vetor de vértices visitados}
+\KwIn{$\text{menorInicio}$: Menor vértice no ciclo até o momento}
+\KwIn{$\text{matrizAdj}$: Matriz de adjacência do grafo}
+\KwOut{Ciclos encontrados, armazenados em \texttt{ciclosUnicos}}
+
+\SetAlgoLined
+Adicionar \texttt{atual} a \texttt{caminho}\;
+Marcar \texttt{atual} como \texttt{visitado}\;
+\For{$\text{vizinho} \gets 0$ \textbf{to} $\text{matrizAdj.size() - 1}$}{
+    \If{$\text{matrizAdj[atual][vizinho]} = 1$}{
+        \If{$\text{vizinho} = \text{inicio}$ \textbf{and} $|\text{caminho}| > 2$}{
+            Criar \texttt{ciclo} como uma cópia de \texttt{caminho}\;
+            Rotacionar \texttt{ciclo} para que o menor vértice esteja no início\;
+            Converter \texttt{ciclo} em uma string \texttt{cicloStr}\;
+            Adicionar \texttt{cicloStr} a \texttt{ciclosUnicos}\;
+        }
+        \ElseIf{$\text{vizinho} \neq \text{inicio}$ \textbf{and} \text{!visitados[vizinho]} \textbf{and} \text{vizinho} > \text{menorInicio}$}{
+            \Call{BuscarCiclos}{\text{vizinho}, \text{inicio}, \text{caminho}, \text{visitados}, \text{menorInicio}, \text{matrizAdj}}
+        }
+    }
+}
+\end{algorithm}
+
+
+\subsubsection{Detecção de Ciclo}
+Caso o vértice adjacente seja o mesmo que o vértice de início (\texttt{inicio}) e o tamanho do caminho seja maior que 2 (indicando que o ciclo possui ao menos três vértices), um ciclo foi detectado. O ciclo é extraído da lista \texttt{caminho} e convertido em um vetor de inteiros. Para garantir que o ciclo seja armazenado de forma única, ele é rotacionado para que o menor vértice no ciclo esteja sempre na posição inicial. Isso padroniza a forma como os ciclos são registrados, evitando a contagem de ciclos equivalentes em diferentes orientações. O ciclo é convertido em uma string e inserido no conjunto \texttt{ciclosUnicos}, garantindo que ciclos repetidos não sejam contados.
+
+\subsubsection{Continuação da Busca}
+Se o vértice adjacente ainda não foi visitado e o número do vértice adjacente for maior do que o \texttt{menorInicio} (o que ajuda a evitar a exploração de ciclos em direção contrária ao ciclo detectado), a busca é chamada recursivamente para o vértice adjacente.
+
+\subsection{Eficiência e Garantia de Ciclos Únicos}
+O uso do conjunto \texttt{ciclosUnicos} é uma estratégia eficaz para garantir que ciclos não sejam duplicados, uma vez que o mesmo ciclo pode ser encontrado em diferentes ordens durante a busca. Além disso, a padronização do ciclo pela rotação para o menor vértice é crucial para evitar a contagem de ciclos em diferentes orientações.
+
+A função de busca recursiva em profundidade permite a exploração completa do grafo e a detecção de ciclos, enquanto o uso do conjunto de vértices visitados impede a exploração de ciclos triviais e facilita a identificação de ciclos reais. Esse algoritmo é eficiente para grafos de tamanho médio, mas pode se tornar menos eficiente à medida que o grafo cresce, devido à necessidade de explorar múltiplos caminhos de maneira recursiva.
+
+\subsubsection{Complexidade do Algoritmo}
+A complexidade do algoritmo depende de vários fatores, incluindo o número de vértices \(V\) e o número de arestas \(E\) no grafo. O algoritmo realiza uma busca em profundidade, o que, em termos de complexidade, é \(O(V + E)\) para um grafo não ponderado, já que cada vértice e cada aresta será visitado.
+
+Além disso, o algoritmo precisa verificar todos os ciclos possíveis. A geração de ciclos não triviais é uma operação adicional, e, no pior cenário, o número de ciclos pode ser exponencial em relação ao número de vértices, \(O(2^V)\), especialmente para grafos densos ou completos. No entanto, o uso do conjunto \texttt{ciclosUnicos} e a padronização pela rotação ajudam a reduzir a redundância e garantir que apenas ciclos únicos sejam contados, o que melhora a eficiência na prática, mas não altera a complexidade assintótica geral.
+
+Portanto, a complexidade total do algoritmo, levando em consideração a detecção de ciclos e as operações de verificação, pode ser considerada como \(O(V + E + 2^V)\) no pior caso.
+
+
+
+\section{Conclusão}
+
+\subsection{Análise Comparativa das Abordagens}
+A análise comparativa entre as abordagens de detecção de ciclos por permutação e por caminhamento revelou diferenças significativas em termos de desempenho. O método baseado em permutação, embora garanta a exploração completa dos ciclos possíveis, apresenta uma complexidade exponencial $O(V! \cdot V)$, tornando-o inviável para grafos grandes. Em contrapartida, o método baseado em caminhamento utiliza a busca em profundidade (DFS), reduzindo a complexidade para $O(V + E + 2^V)$, o que é mais eficiente para a maioria dos casos práticos, especialmente para grafos esparsos.
+
+\subsection{Impacto do Tamanho do Grafo}
+O impacto do crescimento do número de vértices e arestas é evidente na execução dos algoritmos. A abordagem de permutação sofre com o crescimento fatorial do número de vértices, tornando-se rapidamente impraticável. Já a abordagem baseada em caminhamento, apesar de ainda ter um crescimento exponencial no pior caso, consegue lidar melhor com o aumento da complexidade estrutural do grafo devido ao uso de estruturas como conjuntos de ciclos únicos para evitar contagens redundantes.
+
+\subsection{Limitações em Grafos Direcionados}
+A implementação apresentada não é capaz de lidar com grafos direcionados. O método baseado em permutação não considera a direção das arestas ao verificar a existência de ciclos, assumindo sempre uma estrutura não direcionada. Da mesma forma, o método baseado em caminhamento utiliza uma busca em profundidade que percorre as conexões sem levar em conta a direção das arestas, o que pode levar à detecção incorreta de ciclos em um grafo direcionado. Para adaptar esse código a grafos direcionados, seriam necessárias modificações significativas, incluindo ajustes na representação do grafo e na lógica de detecção de ciclos para garantir que apenas caminhos válidos dentro da orientação das arestas sejam considerados.
+
+\subsection{Considerações Finais}
+Os resultados experimentais mostraram que a detecção de ciclos baseada em caminhamento é a mais viável para grafos maiores devido à sua eficiência computacional superior em relação à abordagem de permutação. No entanto, para grafos pequenos, a abordagem de permutação pode ser útil para garantir a enumeração completa dos ciclos. A escolha do método mais adequado depende, portanto, do tamanho e da densidade do grafo, além das restrições computacionais disponíveis. Para estudos futuros, seria interessante investigar otimizações adicionais para ambas as abordagens e explorar heurísticas que possam reduzir a complexidade da enumeração de ciclos.
+
+\section{Atribuições e Responsabilidades}
+\begin{itemize}
+    \item \textbf{Documentação}: Diego Polanski e Vitor Militão
+    \item \textbf{Caminhamento}: Mateus Nunes, Vitor Alexandre e Diego Polanski
+    \item \textbf{Permutação}: Vitor Militão, Pedro Bellone e Nalberth Vieira
+\end{itemize}
+
+\bibliographystyle{apalike-sol}
+\bibliography{refs}
+
+\end{document}
