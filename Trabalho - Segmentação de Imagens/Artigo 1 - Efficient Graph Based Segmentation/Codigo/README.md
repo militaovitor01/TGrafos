@@ -265,10 +265,10 @@ python -c "import PIL; print('Pillow OK')"
 - **Felzenszwalb, P. F., & Huttenlocher, D. P.** (2004). Efficient graph-based image segmentation. *International Journal of Computer Vision*, 59(2), 167-181.
 
 ## 👥 Autores
-Vitor Militão
-Vitor Alexandre
-Diego Polanski
-Projeto desenvolvido para o trabalho dinal da disciplina de Teoria dos Grafos e Computabilidade.
+- Vitor Militão
+- Vitor Alexandre
+- Diego Polanski
+- Projeto desenvolvido para o trabalho dinal da disciplina de Teoria dos Grafos e Computabilidade.
 
 ---
 
