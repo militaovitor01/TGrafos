@@ -1,4 +1,4 @@
-# Segmentação de Imagens por Grafo - Algoritmo AGM
+# Segmentação de Imagens por Grafo - Efficient Graph Based Segmentation
 
 ## 📋 Descrição
 
@@ -16,7 +16,7 @@ Este projeto implementa um algoritmo de segmentação de imagens baseado em **Á
 ## 🏗️ Arquitetura do Projeto
 
 ```
-Artigo1/
+Codigo/
 │
 ├── 📁 data/                    # Imagens de entrada
 │   ├── bigTree.png
