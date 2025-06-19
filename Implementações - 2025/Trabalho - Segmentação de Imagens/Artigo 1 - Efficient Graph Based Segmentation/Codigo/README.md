@@ -144,6 +144,48 @@ g++ -o main.exe main.cpp src/image.cpp src/converter.cpp src/segmenter.cpp src/f
 .\main.exe
 ```
 
+### Execução por Linha de Comando e Medição de Tempo
+
+O programa aceita argumentos para facilitar testes com diferentes imagens e parâmetros, além de exibir um relatório detalhado de tempo de execução.
+
+#### Uso:
+```bash
+.\main.exe [imagem] [sigma] [k] [min]
+```
+- **imagem**: nome do arquivo PNG em `data/` (ex: `tower.png`)
+- **sigma**: parâmetro de suavização (ex: `0.5`)
+- **k**: threshold de segmentação (ex: `500`)
+- **min**: tamanho mínimo do segmento (ex: `50`)
+
+#### Exemplos:
+```bash
+.\main.exe                    # Usa valores padrão (horse.png, 0.5, 500, 50)
+.\main.exe tower.png          # Processa tower.png com parâmetros padrão
+.\main.exe homer.png 1.0 300 100  # Processa homer.png com parâmetros customizados
+```
+
+#### Saída de tempo de execução:
+O programa exibe ao final um resumo como este:
+```
+=== Tempos de Execução ===
+• Conversão PNG→PPM: 155 ms
+• Leitura da imagem:  8 ms
+• Segmentação:        924 ms
+• Conversão PPM→PNG: 131 ms
+• Tempo total:        1.224 segundos
+
+=== Distribuição do Tempo ===
+• Conversão PNG→PPM: 12.7%
+• Leitura da imagem:  0.7%
+• Segmentação:        75.5%
+• Conversão PPM→PNG: 10.7%
+
+=== Performance ===
+• Pixels processados: 228933
+• Tempo por pixel:    0.005 ms/pixel
+• Pixels por segundo: 187037 pixels/s
+```
+
 ### **Configuração**
 
 Para alterar a imagem de entrada, edite `main.cpp`:
